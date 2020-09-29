@@ -1,8 +1,8 @@
 name: reflect
 description: reflect widgets library for flutter
 version: 0.0.1
-author:
-homepage:
+homepage: https://github.com/bridgedxyz/reflect
+repository: https://reflect.bridged.xyz
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
