@@ -12,6 +12,7 @@
 ## Run
 
 ```python
+mkdir dist
 python main.py
 ```
 
