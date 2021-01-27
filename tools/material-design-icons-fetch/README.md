@@ -12,9 +12,16 @@
 ## Run
 
 ```python
+mkdir dist
 python main.py
 ```
 
+
+
+## Output (in dist.zip)
+- icons a~z.svg (icons svg files.)
+- manifest.json (data json contains only icon configuration)
+- full-packed.txt (all data in single file)
 
 
 ## Note

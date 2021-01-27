@@ -23,6 +23,18 @@ SIZE_VARIANT_FLUTTER_NAME_MAP = {
 }
 
 
+def make_icon_full_name(icon_name, icon_variant):
+    return f"{icon_name}_{icon_variant}" if icon_variant != "" else icon_name
+
+def make_icon_full_name_with_size(icon_name, icon_variant, size):
+    return f'{make_icon_full_name(icon_name, icon_variant)}_{size}'
+
+def get_icon_info_from_path(svg_path):
+    splits = svg_path.split('/')
+    icon_name = splits[-3]
+    icon_variant = SIZE_VARIANT_FLUTTER_NAME_MAP[SIZE_VARIANT_NAME_MAP[splits[-2]]]
+    size = re.search(r'(.*?)px\.svg', splits[-1]).group(1)
+    return icon_name, icon_variant, size
 
 
 def main():
@@ -34,11 +46,9 @@ def main():
         svg_paths += [path.join(dirpath, file) for file in filenames]
 
     for svg_path in svg_paths:
-        splits = svg_path.split('/')
-        icon_name = splits[-3]
-        icon_variant = SIZE_VARIANT_FLUTTER_NAME_MAP[SIZE_VARIANT_NAME_MAP[splits[-2]]]
-        size = re.search(r'(.*?)px\.svg', splits[-1]).group(1)
-        icon_full_name = f"{icon_name}_{icon_variant}" if icon_variant != "" else icon_name
+        icon_name, icon_variant, size = get_icon_info_from_path(svg_path)
+        icon_full_name = make_icon_full_name(icon_name, icon_variant)
+        icon_full_name_with_size = make_icon_full_name_with_size(icon_name, icon_variant, size)
         print(icon_name, icon_variant, size)
         config[icon_full_name] = {
             "default_size": size,
@@ -47,11 +57,19 @@ def main():
             "host": "material"
         }
 
-        out = f"{DIST_DIR}/{icon_full_name}.svg"
+        out = f"{DIST_DIR}/{icon_full_name_with_size}.svg"
         copyfile(svg_path, out)
     print(config)
     with open(f'{DIST_DIR}/config.json', 'w') as file:
         json.dump(config, file, indent=2)
+
+    with open(f'{DIST_DIR}/full-packed.txt', 'w') as file:
+        for svg_path in svg_paths:
+            icon_name, icon_variant, size = get_icon_info_from_path(svg_path)
+            with open(svg_path, 'r') as svg_file:
+                content = svg_file.read()
+                line = f'{make_icon_full_name_with_size(icon_name, icon_variant, size)}={content}\n'
+                file.writelines(line)
 
 if __name__ == '__main__':
     main()
