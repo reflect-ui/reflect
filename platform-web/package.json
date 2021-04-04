@@ -1,0 +1,9 @@
+{
+    "name": "@reflect-ui/web-platform-container",
+    "version": "0.0.0",
+    "private": true,
+    "workspaces": [
+        "reflect-react",
+        "packages/*"
+    ]
+}

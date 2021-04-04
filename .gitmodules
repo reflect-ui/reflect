@@ -1,0 +1,9 @@
+[submodule "platform-web/reflect-react"]
+	path = platform-web/reflect-react
+	url = https://github.com/bridgedxyz/reflect-ui-react
+[submodule "platform-web/packages/reflect-core"]
+	path = platform-web/packages/reflect-core
+	url = https://github.com/bridgedxyz/reflect-core-ts
+[submodule "platform-web/reflect-editor-ui-react"]
+	path = platform-web/reflect-editor-ui-react
+	url = https://github.com/bridgedxyz/reflect-editor-ui
